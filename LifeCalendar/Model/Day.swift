@@ -8,27 +8,27 @@
 
 import Foundation
 import RealmSwift
-class Day: Object, TimeInterval {
-    @objc dynamic var day: String = ""
+class Day: Object, DateInterval {
+    @objc dynamic var date: Int = 0
     @objc dynamic var titel: String = ""
-    @objc dynamic var diaryEntry: String = ""
-    @objc dynamic var media: Data = Data()
-    dynamic var emotion: Emotion = .empty
-    @objc dynamic var isCurrentDay: Bool = false
+    @objc  dynamic var diaryEntry: String = ""
+    @objc  dynamic var media: Data = Data()
+    @objc dynamic var emotion: Emotion.RawValue = "empty"
+    @objc dynamic var isCurrentDate: Bool = false
     @objc dynamic var isActive: Bool = false
     
-    convenience init(day: String, titel: String, diaryEntry: String, media: Data,emotion: Emotion, isCurrentDay: Bool, isActive: Bool ) {
+    convenience init(date: Int, titel: String, diaryEntry: String, media: Data,emotion: Emotion, isCurrentDate: Bool, isActive: Bool ) {
         self.init()
-        self.day = day
+        self.date = date
         self.titel = titel
         self.diaryEntry = diaryEntry
         self.media = media
-        self.emotion = emotion
-        self.isCurrentDay = isCurrentDay
+        self.emotion = emotion.rawValue
+        self.isCurrentDate = isCurrentDate
         self.isActive = isActive
         
     }
     override class func primaryKey() -> String? {
-        return "day"
+        return "date"
     }
 }

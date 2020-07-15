@@ -14,6 +14,7 @@ protocol RouterMainProtocol{
 }
 protocol RouterProtocol: RouterMainProtocol{
     func rootViewController()
+    func showCalendarController()
 //    func showDetailViewController(item: GitRepoModel?)
 }
 class Router: RouterProtocol{
@@ -28,5 +29,11 @@ class Router: RouterProtocol{
             guard let mainVC = assemblyBuilder?.createMainView(router: self) else {return}
             navigationController.viewControllers = [mainVC]
         }
+    }
+    func showCalendarController(){
+        if let navigationController = navigationController{
+                   guard let mainVC = assemblyBuilder?.createCalendarController(router: self) else {return}
+                   navigationController.viewControllers = [mainVC]
+               }
     }
 }

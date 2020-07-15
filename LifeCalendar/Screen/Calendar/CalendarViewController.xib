@@ -31,23 +31,23 @@
                         <action selector="segmentController:" destination="-1" eventType="valueChanged" id="01z-9L-Ikt"/>
                     </connections>
                 </segmentedControl>
-                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65f-yU-67U">
+                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="65f-yU-67U">
                     <rect key="frame" x="0.0" y="86" width="414" height="154"/>
                     <constraints>
                         <constraint firstAttribute="height" constant="154" id="rKv-SG-etK"/>
                     </constraints>
-                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                    <fontDescription key="fontDescription" type="system" pointSize="10"/>
                     <nil key="textColor"/>
                     <nil key="highlightedColor"/>
                 </label>
                 <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="none" translatesAutoresizingMaskIntoConstraints="NO" id="4K9-ip-uiB">
-                    <rect key="frame" x="0.0" y="240" width="414" height="622"/>
+                    <rect key="frame" x="27" y="240" width="360" height="622"/>
                     <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                     <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="3VP-8s-MSv">
-                        <size key="itemSize" width="128" height="128"/>
+                        <size key="itemSize" width="32" height="32"/>
                         <size key="headerReferenceSize" width="0.0" height="0.0"/>
                         <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                        <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                        <inset key="sectionInset" minX="12" minY="12" maxX="12" maxY="12"/>
                     </collectionViewFlowLayout>
                 </collectionView>
             </subviews>
@@ -56,10 +56,10 @@
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="65f-yU-67U" secondAttribute="trailing" id="12g-1y-Qvg"/>
                 <constraint firstItem="4K9-ip-uiB" firstAttribute="top" secondItem="65f-yU-67U" secondAttribute="bottom" id="1BM-Y2-0Tc"/>
                 <constraint firstItem="65f-yU-67U" firstAttribute="top" secondItem="tf7-Y2-tHI" secondAttribute="bottom" id="5mM-cd-5Ov"/>
-                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4K9-ip-uiB" secondAttribute="trailing" id="8RX-n3-N6m"/>
+                <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="4K9-ip-uiB" secondAttribute="trailing" constant="27" id="8RX-n3-N6m"/>
                 <constraint firstItem="tf7-Y2-tHI" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="15" id="Bat-O9-taI"/>
                 <constraint firstItem="65f-yU-67U" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="I2G-os-92a"/>
-                <constraint firstItem="4K9-ip-uiB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" id="NXI-QQ-BwU"/>
+                <constraint firstItem="4K9-ip-uiB" firstAttribute="leading" secondItem="fnl-2z-Ty3" secondAttribute="leading" constant="27" id="NXI-QQ-BwU"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="trailing" secondItem="tf7-Y2-tHI" secondAttribute="trailing" constant="15" id="Vpf-R8-OUZ"/>
                 <constraint firstItem="fnl-2z-Ty3" firstAttribute="bottom" secondItem="4K9-ip-uiB" secondAttribute="bottom" id="bgc-mH-0QT"/>
                 <constraint firstItem="tf7-Y2-tHI" firstAttribute="top" secondItem="fnl-2z-Ty3" secondAttribute="top" constant="11" id="fXM-fV-GJr"/>

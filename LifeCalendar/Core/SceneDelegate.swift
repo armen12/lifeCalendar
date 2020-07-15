@@ -25,7 +25,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         let navController = UINavigationController()
         let assemblyBuilder = AssemblyBuilder()
         let router = Router(navigationController: navController, assemblyBuilder: assemblyBuilder)
-        router.rootViewController()
+         let defaults = UserDefaults.standard
+        let isFirstTime = defaults.object(forKey: "isFirstTime") as? Bool ?? true
+        isFirstTime ?  router.rootViewController(): router.showCalendarController()
         window?.rootViewController = navController
         window?.makeKeyAndVisible()
     }

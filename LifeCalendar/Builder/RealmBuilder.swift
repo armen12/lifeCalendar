@@ -10,7 +10,7 @@ import Foundation
 import RealmSwift
 protocol RealmBuilderProtocol {
     func getData<T:Object>(ofType: T.Type) -> [T]?
-    func saveYear<T: Object >(year: [T])
+    func saveDate<T: Object >(date: [T])
     
 }
 class RealmBuilder: RealmBuilderProtocol{
@@ -20,12 +20,12 @@ class RealmBuilder: RealmBuilderProtocol{
     
      func getData<T:Object>(ofType: T.Type) -> [T]? {
         let saveObjects =  realm.objects(ofType)
-        return Array(saveObjects)
+        return Array(saveObjects.sorted(byKeyPath: "date", ascending: true))
     }
     
-     func saveYear<T: Object >(year: [T]){
+     func saveDate<T: Object >(date: [T]){
         try! realm.write {
-            realm.add(year)
+            realm.add(date)
         }
     }
 }

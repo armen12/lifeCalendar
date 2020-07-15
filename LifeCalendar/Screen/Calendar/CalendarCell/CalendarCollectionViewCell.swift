@@ -14,9 +14,24 @@ class CalendarCollectionViewCell: UICollectionViewCell {
     @IBOutlet weak var emotionImageView: UIImageView!
     override func awakeFromNib() {
         super.awakeFromNib()
-        // Initialization code
+        self.customeView.layer.borderWidth = 1
+        self.customeView.layer.borderColor = UIColor.gray.cgColor
+        self.customeView.layer.cornerRadius = 8
+        self.customeView.layer.masksToBounds = true
+
     }
-    func setupCell(item: TimeInterval) -> Self{
+    override func prepareForReuse() {
+        self.emotionImageView.image = nil
+    }
+    func setupCell(item: DateInterval) -> Self{
+        if item.isCurrentDate{
+            print(item)
+            self.emotionImageView.image = UIImage(named:"rock")
+        }else{
+            self.emotionImageView.image = UIImage(named: item.emotion)
+        }
+        
+        
         return self
     }
 

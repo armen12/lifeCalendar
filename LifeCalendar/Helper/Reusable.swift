@@ -22,6 +22,7 @@ extension Reusable {
 }
 
 extension UITableViewCell: Reusable { }
+extension UICollectionReusableView: Reusable { }
 
 extension UITableView {
     
@@ -33,4 +34,13 @@ extension UITableView {
         return self.dequeueReusableCell(withIdentifier: T.reuseIdentifier, for: indexPath) as! T
     }
 }
-
+extension UICollectionView {
+    
+    func register(_ cellType: Reusable.Type) {
+        self.register(UINib(nibName: cellType.reuseIdentifier, bundle: nil), forCellWithReuseIdentifier: cellType.reuseIdentifier)
+    }
+    
+    func dequeueReusableCell<T>(withType type: T.Type, for indexPath: IndexPath) -> T where T: Reusable {
+        return self.dequeueReusableCell(withReuseIdentifier: T.reuseIdentifier, for: indexPath) as! T
+    }
+}

@@ -8,10 +8,13 @@
 
 /* Begin PBXBuildFile section */
 		886A5FB9511CC53FE90B86B1 /* Pods_LifeCalendar.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 617CDA1A92F7C6664355322D /* Pods_LifeCalendar.framework */; };
-		9E1682AF24BD98B3006083A7 /* TableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1682AE24BD98B3006083A7 /* TableView.swift */; };
+		9E1682AF24BD98B3006083A7 /* Reusable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1682AE24BD98B3006083A7 /* Reusable.swift */; };
 		9E1682B124BD98D4006083A7 /* UIViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1682B024BD98D4006083A7 /* UIViewController.swift */; };
 		9E1682B924BD9E3E006083A7 /* CalendarCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E1682B724BD9E3E006083A7 /* CalendarCollectionViewCell.swift */; };
 		9E1682BA24BD9E3E006083A7 /* CalendarCollectionViewCell.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E1682B824BD9E3E006083A7 /* CalendarCollectionViewCell.xib */; };
+		9E32637A24BF00C00003AE67 /* RegistrationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E32637824BF00C00003AE67 /* RegistrationViewController.swift */; };
+		9E32637B24BF00C00003AE67 /* RegistrationViewController.xib in Resources */ = {isa = PBXBuildFile; fileRef = 9E32637924BF00C00003AE67 /* RegistrationViewController.xib */; };
+		9E32637D24BF056A0003AE67 /* RegistrationPresenter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E32637C24BF056A0003AE67 /* RegistrationPresenter.swift */; };
 		9E33E81324BC901D00B21D64 /* Router.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33E81224BC901D00B21D64 /* Router.swift */; };
 		9E33E81524BC902900B21D64 /* AssemblyBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33E81424BC902900B21D64 /* AssemblyBuilder.swift */; };
 		9E33E81824BC95AA00B21D64 /* CalendarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E33E81624BC95AA00B21D64 /* CalendarViewController.swift */; };
@@ -34,10 +37,13 @@
 /* Begin PBXFileReference section */
 		379BC3398D46EE1CED7CE8C3 /* Pods-LifeCalendar.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifeCalendar.release.xcconfig"; path = "Target Support Files/Pods-LifeCalendar/Pods-LifeCalendar.release.xcconfig"; sourceTree = "<group>"; };
 		617CDA1A92F7C6664355322D /* Pods_LifeCalendar.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LifeCalendar.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9E1682AE24BD98B3006083A7 /* TableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TableView.swift; sourceTree = "<group>"; };
+		9E1682AE24BD98B3006083A7 /* Reusable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Reusable.swift; sourceTree = "<group>"; };
 		9E1682B024BD98D4006083A7 /* UIViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIViewController.swift; sourceTree = "<group>"; };
 		9E1682B724BD9E3E006083A7 /* CalendarCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarCollectionViewCell.swift; sourceTree = "<group>"; };
 		9E1682B824BD9E3E006083A7 /* CalendarCollectionViewCell.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CalendarCollectionViewCell.xib; sourceTree = "<group>"; };
+		9E32637824BF00C00003AE67 /* RegistrationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationViewController.swift; sourceTree = "<group>"; };
+		9E32637924BF00C00003AE67 /* RegistrationViewController.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = RegistrationViewController.xib; sourceTree = "<group>"; };
+		9E32637C24BF056A0003AE67 /* RegistrationPresenter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegistrationPresenter.swift; sourceTree = "<group>"; };
 		9E33E81224BC901D00B21D64 /* Router.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Router.swift; sourceTree = "<group>"; };
 		9E33E81424BC902900B21D64 /* AssemblyBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AssemblyBuilder.swift; sourceTree = "<group>"; };
 		9E33E81624BC95AA00B21D64 /* CalendarViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CalendarViewController.swift; sourceTree = "<group>"; };
@@ -79,6 +85,16 @@
 				9E1682B824BD9E3E006083A7 /* CalendarCollectionViewCell.xib */,
 			);
 			path = CalendarCell;
+			sourceTree = "<group>";
+		};
+		9E32637724BF00A80003AE67 /* Registration */ = {
+			isa = PBXGroup;
+			children = (
+				9E32637C24BF056A0003AE67 /* RegistrationPresenter.swift */,
+				9E32637824BF00C00003AE67 /* RegistrationViewController.swift */,
+				9E32637924BF00C00003AE67 /* RegistrationViewController.xib */,
+			);
+			path = Registration;
 			sourceTree = "<group>";
 		};
 		9E33E81124BC901100B21D64 /* Navigator */ = {
@@ -148,7 +164,7 @@
 			isa = PBXGroup;
 			children = (
 				9E3B909C24BC502D002FE344 /* Date.swift */,
-				9E1682AE24BD98B3006083A7 /* TableView.swift */,
+				9E1682AE24BD98B3006083A7 /* Reusable.swift */,
 				9E1682B024BD98D4006083A7 /* UIViewController.swift */,
 			);
 			path = Helper;
@@ -157,6 +173,7 @@
 		9E64838424BC78FD0011B3C6 /* Screen */ = {
 			isa = PBXGroup;
 			children = (
+				9E32637724BF00A80003AE67 /* Registration */,
 				9E64838624BC79370011B3C6 /* Calendar */,
 			);
 			path = Screen;
@@ -263,6 +280,7 @@
 				9E33E81924BC95AA00B21D64 /* CalendarViewController.xib in Resources */,
 				9E3B907E24BC4832002FE344 /* LaunchScreen.storyboard in Resources */,
 				9E3B907B24BC4832002FE344 /* Assets.xcassets in Resources */,
+				9E32637B24BF00C00003AE67 /* RegistrationViewController.xib in Resources */,
 				9E1682BA24BD9E3E006083A7 /* CalendarCollectionViewCell.xib in Resources */,
 				9E3B907924BC4831002FE344 /* Main.storyboard in Resources */,
 			);
@@ -318,13 +336,15 @@
 			buildActionMask = 2147483647;
 			files = (
 				9E3B909724BC4CF1002FE344 /* Day.swift in Sources */,
+				9E32637D24BF056A0003AE67 /* RegistrationPresenter.swift in Sources */,
 				9E33E81524BC902900B21D64 /* AssemblyBuilder.swift in Sources */,
 				9E3B909A24BC4D20002FE344 /* CalendarBuilder.swift in Sources */,
-				9E1682AF24BD98B3006083A7 /* TableView.swift in Sources */,
+				9E1682AF24BD98B3006083A7 /* Reusable.swift in Sources */,
 				9E3B907224BC4831002FE344 /* AppDelegate.swift in Sources */,
 				9E33E81324BC901D00B21D64 /* Router.swift in Sources */,
 				9E3B909124BC4A37002FE344 /* Year.swift in Sources */,
 				9E3B909324BC4C9C002FE344 /* Month.swift in Sources */,
+				9E32637A24BF00C00003AE67 /* RegistrationViewController.swift in Sources */,
 				9E1682B924BD9E3E006083A7 /* CalendarCollectionViewCell.swift in Sources */,
 				9E64838A24BC7AB40011B3C6 /* RealmBuilder.swift in Sources */,
 				9E3B907424BC4831002FE344 /* SceneDelegate.swift in Sources */,

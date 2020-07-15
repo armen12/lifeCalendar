@@ -22,16 +22,20 @@ class CalendarViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.setup()
+        self.setUpCollectionView()
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.setUpCollectionView()
+        self.presenter.setRepo()
         self.view.addSubview(activityIndicator)
     }
     override func viewDidLayoutSubviews() {
         activityIndicator.center = view.center
+        let index = self.presenter.presentingData?.first(where: {$0.isCurrentDate})
+        let indexPath = IndexPath(item: index?.date ?? 0, section: 0)
+        self.collectionView.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: true)
+
     }
     private func hideActivityIndicator(){
         self.activityIndicator.stopAnimating()
@@ -39,24 +43,13 @@ class CalendarViewController: UIViewController {
         self.view.isUserInteractionEnabled = true
     }
     
-    func setup(){
-        let yearofBirth = 1996
-        let month = 02
-        let day = 7
-        let lifeInYears = yearofBirth + 80
-        
-        
-        let myBirthday = Date(dateString: "\(day)-\(month)-\(yearofBirth)", format: "dd-MM-yyyy", timeZone: .autoupdatingCurrent)
-        let myDeath = Date(dateString: "\(day)-\(month)-\(lifeInYears)", format: "dd-MM-yyyy", timeZone: .autoupdatingCurrent)
-        //        CalendarBuilder(myBirthday: myBirthday, myDeath: myDeath)
-    }
     private func setUpCollectionView(){
-        //        self.tableView.register(GitRepoTableViewCell.self)
+        self.collectionView.register(CalendarCollectionViewCell.self)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
     }
     @IBAction func segmentController(_ sender: UISegmentedControl) {
-        switch sender.numberOfSegments {
+        switch sender.selectedSegmentIndex {
         case 0:
             self.presenter.getDays()
         case 1:
@@ -65,8 +58,6 @@ class CalendarViewController: UIViewController {
             self.presenter.getMonths()
         case 3:
             self.presenter.getYears()
-            
-            
         default:
             self.presenter.getDays()
             
@@ -79,7 +70,8 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        return UICollectionViewCell()
+        guard let item = presenter.presentingData?[indexPath.row] else { return UICollectionViewCell()}
+       return collectionView.dequeueReusableCell(withType: CalendarCollectionViewCell.self, for: indexPath).setupCell(item: item)
     }
     
     
@@ -103,6 +95,8 @@ extension CalendarViewController: CalendarInterface{
         self.alert(message: error)
     }
     func changeTimeInterval(){
+        self.hideActivityIndicator()
+        self.descriptuinLabel.text = presenter.leftHourse
         self.collectionView.reloadData()
         
     }

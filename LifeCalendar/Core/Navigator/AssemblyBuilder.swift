@@ -10,12 +10,22 @@ import UIKit
 
 protocol  AssemblyBuilderProtocol {
     func createMainView(router: RouterProtocol) -> UIViewController
+    func createCalendarController(router: Router) -> UIViewController
 }
 class AssemblyBuilder: AssemblyBuilderProtocol{
     func createMainView(router: RouterProtocol) -> UIViewController {
+        let view = RegistrationViewController()
+        let calendarBuilder = CalendarBuilder()
+        let presenter = RegistrationPresenter(view: view, router: router, calendarBuilder: calendarBuilder)
+        view.presenter = presenter
+        return view
+    }
+    func createCalendarController(router: Router) -> UIViewController{
         let view = CalendarViewController()
         let realmDB = RealmBuilder()
-        let presenter = CalendarPresenter(view: view, realmDB: realmDB)
+        let calendarBuilder = CalendarBuilder()
+
+        let presenter = CalendarPresenter(view: view, realmDB: realmDB, router: router, calendareBuilder: calendarBuilder)
         view.presenter = presenter
         return view
     }
