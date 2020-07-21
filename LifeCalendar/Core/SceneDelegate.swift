@@ -21,7 +21,9 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         window = UIWindow(frame: windowScene.coordinateSpace.bounds)
         window?.windowScene = windowScene
-        
+//        let locale = TimeZone.current
+//       TimeZone.default = locale as! TimeZone
+
         let navController = UINavigationController()
         let assemblyBuilder = AssemblyBuilder()
         let router = Router(navigationController: navController, assemblyBuilder: assemblyBuilder)

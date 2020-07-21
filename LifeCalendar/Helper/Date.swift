@@ -74,3 +74,40 @@ extension Date {
         return ""
     }
 }
+extension Date {
+    
+   struct Formatter {
+       static let utcFormatter: DateFormatter = {
+           let dateFormatter = DateFormatter()
+ dateFormatter.dateFormat = "dd-MM-yyyy"
+//           dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss'Z'"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+//Date().description(with: .current)
+//           dateFormatter.timeZone = TimeZone(identifier: "UTC")
+ 
+           return dateFormatter
+       }()
+   }
+ 
+   var dateToUTC: String {
+       return Formatter.utcFormatter.string(from: self)
+   }
+}
+ 
+extension String {
+   struct Formatter {
+       static let utcFormatter: DateFormatter = {
+           let dateFormatter = DateFormatter()
+//           dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ssz"
+           dateFormatter.dateFormat = "dd-MM-yyyy"
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+
+
+           return dateFormatter
+       }()
+   }
+ 
+   var dateFromUTC: Date? {
+       return Formatter.utcFormatter.date(from: self)
+   }
+}

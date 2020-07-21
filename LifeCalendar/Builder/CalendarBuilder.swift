@@ -16,6 +16,7 @@ enum DateType{
 }
 
 protocol CalendarBuilderProtocol {
+    //    func setupCalendar(myBirthday: String, myDeath: Str)
     func setupCalendar(myBirthday: Date, myDeath: Date)
     func getTimeInterval(type: DateType) -> (first: String, second: String)
 }
@@ -59,80 +60,49 @@ class CalendarBuilder: CalendarBuilderProtocol{
         let hours = (interval / 3600)
         return "\(hours)h : \(minutes)m : \(seconds)s"
     }
+    
     private func setupYears(myBirthday: Date, myDeath: Date){
         var arrayOfyears = [Year]()
         let myDeath = UserDefaults.standard.object(forKey: "myDeath") as! Date
         let myBirthday = UserDefaults.standard.object(forKey: "myBirthday") as! Date
-        
-        for year in  myBirthday.year..<(myDeath.year+1){
-            print(year)
-            if year < Date().year{
-                arrayOfyears.append(Year(date: year, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty , isCurrentDate: false, isActive: false))
-            }else if year == Date().year{
-                arrayOfyears.append(Year(date: year, titel: "", diaryEntry: "", media: Data(),  emotion: Emotion.empty, isCurrentDate: true, isActive: true))
-            }else{
-                arrayOfyears.append(Year(date: year, titel: "", diaryEntry: "", media: Data(),  emotion: Emotion.empty, isCurrentDate: false, isActive: true))
-            }
+        var index = 0
+         for year in  myBirthday.year..<(myDeath.year+1){
+            let date = Calendar.current.date(byAdding: .year, value: index, to: myBirthday)!
+            arrayOfyears.append(Year(date: date, index: year, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty , isCurrentindex: false, isActive: false))
+            index+=1
         }
         RealmBuilder.shared.saveDate(date: arrayOfyears)
-//        print(arrayOfyears)
     }
     
     private  func setupMonth(myBirthday: Date, myDeath: Date){
         let weeksOfLife = myDeath.months(from: myBirthday)
-        let weeksToCurrentDate = Date().months(from: myBirthday)
         var arrayOfMonth = [Month]()
-        for month in 0..<(weeksOfLife+1){
-            if month < weeksToCurrentDate{
-                arrayOfMonth.append(Month(date: month, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty, isCurrentDate: false, isActive: false))
-                
-            }else if month == weeksToCurrentDate{
-                arrayOfMonth.append(Month(date: month, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty, isCurrentDate: true, isActive: true))
-            }else{
-                arrayOfMonth.append(Month(date: month, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty, isCurrentDate: false, isActive: true))
-            }
+        for month in 0..<(weeksOfLife){
+            let date = Calendar.current.date(byAdding: .month, value: month, to: myBirthday)!
+            arrayOfMonth.append(Month(date: date, index: month, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty , isCurrentindex: false, isActive: false))
         }
         RealmBuilder.shared.saveDate(date: arrayOfMonth)
-
-//        print(arrayOfMonth)
+        
     }
     
     private func setupWeeks(myBirthday: Date, myDeath: Date){
         let weeksOfLife = myDeath.weeks(from: myBirthday)
-        let weeksToCurrentDate = Date().weeks(from: myBirthday)
         var arrayOfWeeks = [Week]()
-        for week in 0..<(weeksOfLife+1){
-            if week < weeksToCurrentDate{
-                arrayOfWeeks.append(Week(date: week, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty, isCurrentDate: false, isActive: false))
-                
-            }else if week == weeksToCurrentDate{
-                arrayOfWeeks.append(Week(date: week, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty, isCurrentDate: true, isActive: true))
-            }else{
-                arrayOfWeeks.append(Week(date: week, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty, isCurrentDate: false, isActive: true))
-            }
-        }
+        for week in 0..<(weeksOfLife){
+            let date = Calendar.current.date(byAdding: .weekOfYear, value: week, to: myBirthday)!
+            arrayOfWeeks.append(Week(date: date, index: week, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty , isCurrentindex: false, isActive: false))        }
         RealmBuilder.shared.saveDate(date: arrayOfWeeks)
-
-//        print(arrayOfWeeks)
+    
     }
     
     private func setupDays(myBirthday: Date, myDeath: Date){
         let daysOfLife = myDeath.days(from: myBirthday)
-        let daysToCurrentDate = Date().days(from: myBirthday)
         var arrayOfDays = [Day]()
-        for day in 0..<(daysOfLife+1){
-            if day < daysToCurrentDate{
-                arrayOfDays.append(Day(date: day, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty, isCurrentDate: false, isActive: false))
-                
-            }else if day == daysToCurrentDate{
-                arrayOfDays.append(Day(date: day, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty, isCurrentDate: true, isActive: true))
-            }else{
-                arrayOfDays.append(Day(date: day, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty, isCurrentDate: false, isActive: true))
-            }
+        for day in 0..<(daysOfLife){
+            let date =  Calendar.current.date(byAdding: .day, value: day, to: myBirthday)!
+            arrayOfDays.append(Day(date: date, index: day, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty , isCurrentindex: false, isActive: false))
         }
         RealmBuilder.shared.saveDate(date: arrayOfDays)
-
-//        print(arrayOfDays)
     }
     
 }

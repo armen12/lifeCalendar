@@ -20,7 +20,7 @@ class RealmBuilder: RealmBuilderProtocol{
     
      func getData<T:Object>(ofType: T.Type) -> [T]? {
         let saveObjects =  realm.objects(ofType)
-        return Array(saveObjects.sorted(byKeyPath: "date", ascending: true))
+        return Array(saveObjects.sorted(byKeyPath: "index", ascending: true)).detached
     }
     
      func saveDate<T: Object >(date: [T]){
@@ -28,4 +28,14 @@ class RealmBuilder: RealmBuilderProtocol{
             realm.add(date)
         }
     }
+    func getPaginationDays(pagination: Int, isFirst: Bool, isTopScroll: Bool?){
+        let saveObjects =  realm.objects(Day.self)
+        let s = Array(saveObjects.sorted(byKeyPath: "index", ascending: true)).detached
+        if isFirst{
+            
+        }else{
+            
+        }
+    }
+    
 }
