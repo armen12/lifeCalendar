@@ -12,8 +12,7 @@ protocol CalendarInterface: class{
     func loading()
     func success()
     func failure(error: String)
-    func changeTimeIntervalDays()
-    func changeTimeIntervalOther()
+    func addPagginationDays()
 }
 protocol  CalendarPresenterProtocol: class {
     init(view: CalendarInterface, realmDB: RealmBuilderProtocol, router: RouterProtocol, calendareBuilder: CalendarBuilderProtocol)
@@ -32,8 +31,8 @@ class CalendarPresenter: CalendarPresenterProtocol{
     weak var view: CalendarInterface?
     var realmDB: RealmBuilderProtocol?
     var router: RouterProtocol!
-    var currentDayIndex: Int
     var tempDays: [DateInterval]
+//    var tempWeeks: [DateInterval]
     
     required init(view: CalendarInterface, realmDB: RealmBuilderProtocol, router: RouterProtocol, calendareBuilder: CalendarBuilderProtocol ) {
         self.view = view
@@ -45,34 +44,38 @@ class CalendarPresenter: CalendarPresenterProtocol{
         self.weeks = []
         self.days = []
         self.presentingData = []
-        self.currentDayIndex = 0
         self.tempDays = []
+//        self.tempWeeks = []
     }
     
     func setRepo() {
-        self.view?.loading()
-//        self.loadDays()
         self.getDate(dataType: .day)
         
     }
     func getDate(dataType: DateType){
+        self.view?.loading()
         switch dataType {
         case .year:
+            self.years = []
             self.loadYears()
             self.presentingData = self.years
-            self.view?.changeTimeIntervalOther()
+            self.view?.success()
         case .month:
+            self.months = []
             self.loadMonths()
             self.presentingData = self.months
-            self.view?.changeTimeIntervalOther()
+            self.view?.success()
         case .week:
+            self.weeks = []
             self.loadWeeks()
             self.presentingData = self.weeks
-            self.view?.changeTimeIntervalOther()
+            self.view?.success()
         case .day:
+            self.tempDays = []
+            self.days = []
             self.loadDays()
             self.presentingData = self.days
-             self.view?.success()
+            self.view?.success()
         }
     }
     
@@ -81,7 +84,7 @@ class CalendarPresenter: CalendarPresenterProtocol{
             let s = self.calendareBuilder?.getTimeInterval(type: .year)
             leftHourse = "Left: \(s?.second ?? "") \n" + "or \n" + "\(s?.first ?? "")"
             db.forEach({
-                years.append(self.getCurrentDate(date: $0, dateType: .month))
+                years.append(self.getCurrentDate(date: $0, dateType: .year))
             })
         }else{
             self.view?.failure(error: "Fail Years")
@@ -89,7 +92,6 @@ class CalendarPresenter: CalendarPresenterProtocol{
     }
     
     func loadMonths(){
-        self.view?.loading()
         if  let db =  realmDB?.getData(ofType: Month.self){
             let s = self.calendareBuilder?.getTimeInterval(type: .month)
             leftHourse = "Left: \(s?.second ?? "") \nor \n\(s?.first ?? "")"
@@ -117,53 +119,8 @@ class CalendarPresenter: CalendarPresenterProtocol{
             
         }
     }
-    func getPaginationDays(pagination: Int, isFirst: Bool, isTopScroll: Bool?){
-        if isFirst{
-            let myBirthday = UserDefaults.standard.object(forKey: "myBirthday") as! Date
-            let daysOfLifeIndex = Date().days(from: myBirthday)
-            guard let currentDayIndex = self.tempDays.first(where: {$0.index == daysOfLifeIndex})?.index else {return}
-            self.currentDayIndex = currentDayIndex
-            let chunc = Array(self.tempDays[currentDayIndex-pagination...currentDayIndex+pagination])
-            chunc.forEach({
-                days.append(self.getCurrentDate(date: $0, dateType: .day))
-            })
-        }else{
-            if isTopScroll ?? false{
-                self.insertNewDays(pagination: pagination)
-            }else{
-                self.appendNewDays(pagination: pagination)
-            }
-        }
-    }
-    func appendNewDays(pagination:Int){
-        let tempIndex = days.last!.index + pagination
-        if self.tempDays.indices.contains(tempIndex) {
-            let chunc = Array(self.tempDays[days.last!.index+1...tempIndex])
-            chunc.forEach({
-                days.append(self.getCurrentDate(date: $0, dateType: .day))
-            })
-             self.presentingData = days
-            self.view?.changeTimeIntervalDays()
-        }else{
-            print("Error")
-        }
-    }
-    func insertNewDays(pagination: Int){
-        let tempIndex = days.first!.index - pagination
-        if self.tempDays.indices.contains(tempIndex) {
-            let chunc = Array(self.tempDays[tempIndex...days.first!.index-1])
-            chunc.forEach({
-                days.insert(self.getCurrentDate(date: $0, dateType: .day), at: 0)
-            })
-             self.presentingData = days
-            self.view?.changeTimeIntervalDays()
-        }else{
-            print("Error")
-        }
-    }
     
     func loadDays(){
-        
         if  let db  = realmDB?.getData(ofType: Day.self){
             self.tempDays = db
             let s = self.calendareBuilder?.getTimeInterval(type: .day)
@@ -171,10 +128,10 @@ class CalendarPresenter: CalendarPresenterProtocol{
             getPaginationDays(pagination: 100, isFirst: true, isTopScroll: nil)
         }else{
             self.view?.failure(error: "Fail Day")
-            
         }
     }
-    private func getCurrentDate(date: DateInterval, dateType: DateType) -> DateInterval{
+    
+     func getCurrentDate(date: DateInterval, dateType: DateType) -> DateInterval{
         let s = date.date.format(with: "dd-MM-yyyy", locale: .current)
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "dd-MM-yyyy"

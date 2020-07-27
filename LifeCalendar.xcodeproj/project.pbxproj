@@ -34,6 +34,7 @@
 		9E64838A24BC7AB40011B3C6 /* RealmBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9E64838924BC7AB40011B3C6 /* RealmBuilder.swift */; };
 		9EABB6CC24C5C81A00DBCCB1 /* Realm.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EABB6CB24C5C81A00DBCCB1 /* Realm.swift */; };
 		9EABB6CE24C6F71B00DBCCB1 /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EABB6CD24C6F71B00DBCCB1 /* Array.swift */; };
+		9EE6108824CEDF4200CCDFDC /* CalendarPresenter+Pagination.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9EE6108724CEDF4200CCDFDC /* CalendarPresenter+Pagination.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -67,6 +68,7 @@
 		9E64838924BC7AB40011B3C6 /* RealmBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RealmBuilder.swift; sourceTree = "<group>"; };
 		9EABB6CB24C5C81A00DBCCB1 /* Realm.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Realm.swift; sourceTree = "<group>"; };
 		9EABB6CD24C6F71B00DBCCB1 /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
+		9EE6108724CEDF4200CCDFDC /* CalendarPresenter+Pagination.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CalendarPresenter+Pagination.swift"; sourceTree = "<group>"; };
 		F4859EE4931242B2B9E51F02 /* Pods-LifeCalendar.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LifeCalendar.debug.xcconfig"; path = "Target Support Files/Pods-LifeCalendar/Pods-LifeCalendar.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -200,6 +202,7 @@
 			children = (
 				9E1682B224BD9C80006083A7 /* CalendarCell */,
 				9E64838724BC79600011B3C6 /* CalendarPresenter.swift */,
+				9EE6108724CEDF4200CCDFDC /* CalendarPresenter+Pagination.swift */,
 				9E33E81624BC95AA00B21D64 /* CalendarViewController.swift */,
 				9E33E81724BC95AA00B21D64 /* CalendarViewController.xib */,
 			);
@@ -346,6 +349,7 @@
 				9E32637D24BF056A0003AE67 /* RegistrationPresenter.swift in Sources */,
 				9E33E81524BC902900B21D64 /* AssemblyBuilder.swift in Sources */,
 				9E3B909A24BC4D20002FE344 /* CalendarBuilder.swift in Sources */,
+				9EE6108824CEDF4200CCDFDC /* CalendarPresenter+Pagination.swift in Sources */,
 				9E1682AF24BD98B3006083A7 /* Reusable.swift in Sources */,
 				9EABB6CC24C5C81A00DBCCB1 /* Realm.swift in Sources */,
 				9E3B907224BC4831002FE344 /* AppDelegate.swift in Sources */,
