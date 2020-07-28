@@ -7,5 +7,7 @@ target 'LifeCalendar' do
 
   pod 'RealmSwift'
   pod 'DateToolsSwift'
+  pod 'IQKeyboardManagerSwift'
+
 
 end

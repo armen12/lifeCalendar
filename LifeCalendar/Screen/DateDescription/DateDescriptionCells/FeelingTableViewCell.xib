@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <objects>
+        <placeholder placeholderIdentifier="IBFilesOwner" id="-1" userLabel="File's Owner"/>
+        <placeholder placeholderIdentifier="IBFirstResponder" id="-2" customClass="UIResponder"/>
+        <tableViewCell contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="91" id="KGk-i7-Jjw" customClass="FeelingTableViewCell" customModule="LifeCalendar" customModuleProvider="target">
+            <rect key="frame" x="0.0" y="0.0" width="424" height="95"/>
+            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+            <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="KGk-i7-Jjw" id="H2p-sc-9uM">
+                <rect key="frame" x="0.0" y="0.0" width="424" height="95"/>
+                <autoresizingMask key="autoresizingMask"/>
+                <subviews>
+                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How do you feel?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Mit-qb-Uwl">
+                        <rect key="frame" x="15" y="0.0" width="97.5" height="14.5"/>
+                        <fontDescription key="fontDescription" type="system" pointSize="12"/>
+                        <color key="textColor" red="0.40784313725490196" green="0.40784313725490196" blue="0.40784313725490196" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <nil key="highlightedColor"/>
+                    </label>
+                    <stackView opaque="NO" contentMode="scaleToFill" distribution="equalCentering" spacing="16" translatesAutoresizingMaskIntoConstraints="NO" id="wmh-f2-TPH">
+                        <rect key="frame" x="15" y="22.5" width="394" height="44"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hMd-Wq-Smh">
+                                <rect key="frame" x="0.0" y="0.0" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="6fk-rP-BMX"/>
+                                    <constraint firstAttribute="height" constant="44" id="hH3-JR-kta"/>
+                                </constraints>
+                                <state key="normal" image="dead"/>
+                                <connections>
+                                    <action selector="deadFeelingAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="cRY-RU-2vc"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6Bn-B7-yMc">
+                                <rect key="frame" x="87.5" y="0.0" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="44" id="Jwh-ID-Bx0"/>
+                                    <constraint firstAttribute="height" constant="44" id="bk6-Uq-kTr"/>
+                                </constraints>
+                                <state key="normal" image="neutral"/>
+                                <connections>
+                                    <action selector="neutralFeelingAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="1ir-YE-UVE"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="nsm-US-wZc">
+                                <rect key="frame" x="175" y="0.0" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="7Fb-fQ-nDu"/>
+                                    <constraint firstAttribute="width" constant="44" id="VQk-6y-PYu"/>
+                                </constraints>
+                                <state key="normal" image="heart"/>
+                                <connections>
+                                    <action selector="heartFeelingAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Npa-f9-MGo"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5CX-ih-9Qa">
+                                <rect key="frame" x="262.5" y="0.0" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="8j4-PM-5Rj"/>
+                                    <constraint firstAttribute="width" constant="44" id="FPA-Z0-n4f"/>
+                                </constraints>
+                                <state key="normal" image="rock"/>
+                                <connections>
+                                    <action selector="rockFeelingAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="Mn4-Da-6Bd"/>
+                                </connections>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hbo-sS-ua8">
+                                <rect key="frame" x="350" y="0.0" width="44" height="44"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="44" id="eOF-2i-fBX"/>
+                                    <constraint firstAttribute="width" constant="44" id="wUr-Z8-vqW"/>
+                                </constraints>
+                                <state key="normal" image="fire"/>
+                                <connections>
+                                    <action selector="fireFeelingAction:" destination="KGk-i7-Jjw" eventType="touchUpInside" id="KXE-u0-Jo2"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <constraints>
+                            <constraint firstAttribute="height" constant="44" id="ong-Xb-Mgv"/>
+                        </constraints>
+                    </stackView>
+                </subviews>
+                <constraints>
+                    <constraint firstItem="Mit-qb-Uwl" firstAttribute="top" secondItem="H2p-sc-9uM" secondAttribute="top" id="2rz-Fk-Nyg"/>
+                    <constraint firstItem="wmh-f2-TPH" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="41D-h0-JFF"/>
+                    <constraint firstItem="Mit-qb-Uwl" firstAttribute="leading" secondItem="H2p-sc-9uM" secondAttribute="leading" constant="15" id="B8t-ty-gz7"/>
+                    <constraint firstItem="wmh-f2-TPH" firstAttribute="top" secondItem="Mit-qb-Uwl" secondAttribute="bottom" constant="8" id="CwX-KO-fxP"/>
+                    <constraint firstAttribute="trailing" secondItem="wmh-f2-TPH" secondAttribute="trailing" constant="15" id="YcB-hs-hQk"/>
+                    <constraint firstAttribute="bottom" secondItem="wmh-f2-TPH" secondAttribute="bottom" constant="28.5" id="qd6-b7-HLo"/>
+                </constraints>
+            </tableViewCellContentView>
+            <viewLayoutGuide key="safeArea" id="njF-e1-oar"/>
+            <connections>
+                <outlet property="deadButtonOutlet" destination="hMd-Wq-Smh" id="UQu-qy-ImA"/>
+                <outlet property="fireButtonOutlet" destination="hbo-sS-ua8" id="Fdc-bt-3Uz"/>
+                <outlet property="heartButtonOutlet" destination="nsm-US-wZc" id="P40-fp-oe6"/>
+                <outlet property="neutralButtonOutlet" destination="6Bn-B7-yMc" id="m7u-l3-aaz"/>
+                <outlet property="rockButtonOutlet" destination="5CX-ih-9Qa" id="Uwu-58-9sc"/>
+            </connections>
+            <point key="canvasLocation" x="213.04347826086959" y="140.29017857142856"/>
+        </tableViewCell>
+    </objects>
+    <resources>
+        <image name="dead" width="32" height="32"/>
+        <image name="fire" width="32" height="32"/>
+        <image name="heart" width="32" height="32"/>
+        <image name="neutral" width="32" height="32"/>
+        <image name="rock" width="32" height="32"/>
+    </resources>
+</document>

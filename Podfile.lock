@@ -1,5 +1,6 @@
 PODS:
   - DateToolsSwift (5.0.0)
+  - IQKeyboardManagerSwift (6.5.5)
   - Realm (5.0.3):
     - Realm/Headers (= 5.0.3)
   - Realm/Headers (5.0.3)
@@ -8,19 +9,22 @@ PODS:
 
 DEPENDENCIES:
   - DateToolsSwift
+  - IQKeyboardManagerSwift
   - RealmSwift
 
 SPEC REPOS:
   trunk:
     - DateToolsSwift
+    - IQKeyboardManagerSwift
     - Realm
     - RealmSwift
 
 SPEC CHECKSUMS:
   DateToolsSwift: 4207ada6ad615d8dc076323d27037c94916dbfa6
+  IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
   Realm: bfca1699b61b0b17c3a69ae0e648314eae91fbdb
   RealmSwift: 493c9f089cd3893b3959007973c0e4f640906ba0
 
-PODFILE CHECKSUM: dfbff77376c1d0b22a92706424b3f61cdd7d24ed
+PODFILE CHECKSUM: 69dd87d0babbea83db0b40b355096e8b781e2e4e
 
 COCOAPODS: 1.9.1

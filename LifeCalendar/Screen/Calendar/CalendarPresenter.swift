@@ -12,15 +12,17 @@ protocol CalendarInterface: class{
     func loading()
     func success()
     func failure(error: String)
-    func addPagginationDays()
+    func addPaggination()
 }
 protocol  CalendarPresenterProtocol: class {
     init(view: CalendarInterface, realmDB: RealmBuilderProtocol, router: RouterProtocol, calendareBuilder: CalendarBuilderProtocol)
     func setRepo()
-    var presentingData: [DateInterval] {get set}
+    func selectDate(date: DateInterval)
+    
     
 }
 class CalendarPresenter: CalendarPresenterProtocol{
+    
     var presentingData: [DateInterval]
     var years: [DateInterval]
     var months: [DateInterval]
@@ -32,7 +34,7 @@ class CalendarPresenter: CalendarPresenterProtocol{
     var realmDB: RealmBuilderProtocol?
     var router: RouterProtocol!
     var tempDays: [DateInterval]
-//    var tempWeeks: [DateInterval]
+    var tempWeeks: [DateInterval]
     
     required init(view: CalendarInterface, realmDB: RealmBuilderProtocol, router: RouterProtocol, calendareBuilder: CalendarBuilderProtocol ) {
         self.view = view
@@ -45,12 +47,16 @@ class CalendarPresenter: CalendarPresenterProtocol{
         self.days = []
         self.presentingData = []
         self.tempDays = []
-//        self.tempWeeks = []
+        self.tempWeeks = []
     }
     
     func setRepo() {
         self.getDate(dataType: .day)
         
+    }
+    
+    func selectDate(date: DateInterval) {
+        self.router.showDateDescriptionController(item: date)
     }
     func getDate(dataType: DateType){
         self.view?.loading()
@@ -61,6 +67,7 @@ class CalendarPresenter: CalendarPresenterProtocol{
             self.presentingData = self.years
             self.view?.success()
         case .month:
+            self.tempWeeks = []
             self.months = []
             self.loadMonths()
             self.presentingData = self.months
@@ -108,12 +115,10 @@ class CalendarPresenter: CalendarPresenterProtocol{
     
     func loadWeeks(){
         if  let db = realmDB?.getData(ofType: Week.self){
+            self.tempWeeks = db
             let s = self.calendareBuilder?.getTimeInterval(type: .week)
             leftHourse = "Left: \(s?.second ?? "") \nor \n\(s?.first ?? "") "
-            db.forEach({
-                weeks.append(self.getCurrentDate(date: $0, dateType: .week))
-            })
-            self.getDate(dataType: .week)
+            getPaginationWeeks(pagination: 100, isFirst: true, isTopScroll: nil)
         }else{
             self.view?.failure(error: "Fail Week")
             
@@ -178,4 +183,5 @@ class CalendarPresenter: CalendarPresenterProtocol{
         }
         return date
     }
+    
 }

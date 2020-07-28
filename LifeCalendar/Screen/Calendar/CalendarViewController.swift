@@ -32,6 +32,7 @@ class CalendarViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         self.presenter.setRepo()
+        self.collectionView.reloadData()
         activityIndicator.center = self.view.center
         activityIndicator.hidesWhenStopped = true
         activityIndicator.style = .large
@@ -87,13 +88,18 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         //        print(indexPath.row)
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        if dateType == .day{
+        switch dateType {
+        case .day:
             if indexPath.row == self.presenter.presentingData.count - 1 {
                 self.presenter.getPaginationDays(pagination: 100, isFirst: false, isTopScroll: false)
             }
-            
+        case .week:
+            if indexPath.row == self.presenter.presentingData.count - 1 {
+                self.presenter.getPaginationWeeks(pagination: 100, isFirst: false, isTopScroll: false)
+            }
+        default:
+            break
         }
-        
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         print(self.presenter.presentingData.count)
@@ -103,6 +109,9 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let item = presenter.presentingData[indexPath.row]
         return collectionView.dequeueReusableCell(withType: CalendarCollectionViewCell.self, for: indexPath).setupCell(item: item)
+    }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        self.presenter.selectDate(date: self.presenter.presentingData[indexPath.row])
     }
     
     
@@ -116,11 +125,11 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout{
     }
 }
 extension CalendarViewController: CalendarInterface{
-    func addPagginationDays() {
+    func addPaggination() {
         self.descriptuinLabel.text = presenter.leftHourse
         self.hideActivityIndicator()
         DispatchQueue.main.async {
-        self.collectionView.reloadData()
+            self.collectionView.reloadData()
         }
     }
     
@@ -149,11 +158,20 @@ extension CalendarViewController: CalendarInterface{
 }
 extension CalendarViewController{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
-        if dateType == .day{
+        switch dateType {
+        case .day:
             if (scrollView.contentOffset.y <= 1){
                 scrollView.contentOffset.y = 15
                 self.presenter.getPaginationDays(pagination: 100, isFirst: false, isTopScroll: true)
             }
+            
+        case .week:
+            if (scrollView.contentOffset.y <= 1){
+                scrollView.contentOffset.y = 15
+                self.presenter.getPaginationWeeks(pagination: 100, isFirst: false, isTopScroll: true)
+            }
+        default:
+            break
         }
     }
     

@@ -15,15 +15,18 @@ protocol RouterMainProtocol{
 protocol RouterProtocol: RouterMainProtocol{
     func rootViewController()
     func showCalendarController()
-//    func showDetailViewController(item: GitRepoModel?)
+    func showDateDescriptionController(item: DateInterval)
+    func popScreen()
 }
 class Router: RouterProtocol{
+    
+    
     var assemblyBuilder: AssemblyBuilderProtocol?
     var navigationController: UINavigationController?
     init(navigationController: UINavigationController, assemblyBuilder: AssemblyBuilderProtocol) {
-         self.navigationController = navigationController
-         self.assemblyBuilder = assemblyBuilder
-     }
+        self.navigationController = navigationController
+        self.assemblyBuilder = assemblyBuilder
+    }
     func rootViewController() {
         if let navigationController = navigationController{
             guard let mainVC = assemblyBuilder?.createMainView(router: self) else {return}
@@ -32,8 +35,19 @@ class Router: RouterProtocol{
     }
     func showCalendarController(){
         if let navigationController = navigationController{
-                   guard let mainVC = assemblyBuilder?.createCalendarController(router: self) else {return}
-                   navigationController.viewControllers = [mainVC]
-               }
+            guard let calendarVC = assemblyBuilder?.createCalendarController(router: self) else {return}
+            navigationController.pushViewController(calendarVC, animated: true)
+        }
+    }
+    func showDateDescriptionController(item: DateInterval) {
+        if let navigationController = navigationController{
+            guard let detailsVC = assemblyBuilder?.createDateDescriptionController(router: self, item: item) else {return}
+            navigationController.pushViewController(detailsVC, animated: true)
+        }
+    }
+    func popScreen() {
+        if let navigationController = navigationController{
+            navigationController.popViewController(animated: true)
+        }
     }
 }

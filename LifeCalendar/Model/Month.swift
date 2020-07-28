@@ -14,12 +14,12 @@ class Month: Object, DateInterval {
     @objc  dynamic var index: Int = 0
     @objc dynamic var titel: String = ""
     @objc  dynamic var diaryEntry: String = ""
-    @objc  dynamic var media: Data = Data()
+    @objc  dynamic var media: String = ""
     @objc dynamic var emotion: Emotion.RawValue = "empty"
     @objc dynamic var isCurrentindex: Bool = false
     @objc dynamic var isActive: Bool = false
     
-    convenience init(date: Date, index: Int, titel: String, diaryEntry: String, media: Data,emotion: Emotion, isCurrentindex: Bool, isActive: Bool ) {
+    convenience init(date: Date, index: Int, titel: String, diaryEntry: String, media: String, emotion: Emotion, isCurrentindex: Bool, isActive: Bool ) {
         self.init()
         self.date = date
         self.index = index

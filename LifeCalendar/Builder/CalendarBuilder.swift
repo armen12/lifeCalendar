@@ -68,7 +68,7 @@ class CalendarBuilder: CalendarBuilderProtocol{
         var index = 0
          for year in  myBirthday.year..<(myDeath.year+1){
             let date = Calendar.current.date(byAdding: .year, value: index, to: myBirthday)!
-            arrayOfyears.append(Year(date: date, index: year, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty , isCurrentindex: false, isActive: false))
+            arrayOfyears.append(Year(date: date, index: year, titel: "", diaryEntry: "", media: "", emotion: Emotion.empty , isCurrentindex: false, isActive: false))
             index+=1
         }
         RealmBuilder.shared.saveDate(date: arrayOfyears)
@@ -79,7 +79,7 @@ class CalendarBuilder: CalendarBuilderProtocol{
         var arrayOfMonth = [Month]()
         for month in 0..<(weeksOfLife){
             let date = Calendar.current.date(byAdding: .month, value: month, to: myBirthday)!
-            arrayOfMonth.append(Month(date: date, index: month, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty , isCurrentindex: false, isActive: false))
+            arrayOfMonth.append(Month(date: date, index: month, titel: "", diaryEntry: "", media: "", emotion: Emotion.empty , isCurrentindex: false, isActive: false))
         }
         RealmBuilder.shared.saveDate(date: arrayOfMonth)
         
@@ -90,7 +90,7 @@ class CalendarBuilder: CalendarBuilderProtocol{
         var arrayOfWeeks = [Week]()
         for week in 0..<(weeksOfLife){
             let date = Calendar.current.date(byAdding: .weekOfYear, value: week, to: myBirthday)!
-            arrayOfWeeks.append(Week(date: date, index: week, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty , isCurrentindex: false, isActive: false))        }
+            arrayOfWeeks.append(Week(date: date, index: week, titel: "", diaryEntry: "", media: "", emotion: Emotion.empty , isCurrentindex: false, isActive: false))        }
         RealmBuilder.shared.saveDate(date: arrayOfWeeks)
     
     }
@@ -100,7 +100,7 @@ class CalendarBuilder: CalendarBuilderProtocol{
         var arrayOfDays = [Day]()
         for day in 0..<(daysOfLife){
             let date =  Calendar.current.date(byAdding: .day, value: day, to: myBirthday)!
-            arrayOfDays.append(Day(date: date, index: day, titel: "", diaryEntry: "", media: Data(), emotion: Emotion.empty , isCurrentindex: false, isActive: false))
+            arrayOfDays.append(Day(date: date, index: day, titel: "", diaryEntry: "", media: "", emotion: Emotion.empty , isCurrentindex: false, isActive: false))
         }
         RealmBuilder.shared.saveDate(date: arrayOfDays)
     }

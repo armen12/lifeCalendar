@@ -11,31 +11,30 @@ import RealmSwift
 protocol RealmBuilderProtocol {
     func getData<T:Object>(ofType: T.Type) -> [T]?
     func saveDate<T: Object >(date: [T])
+    func updateDate<T: DateInterval>(date: T)
     
 }
 class RealmBuilder: RealmBuilderProtocol{
     let realm = try! Realm()
     
-   static let shared = RealmBuilder()
+    static let shared = RealmBuilder()
     
-     func getData<T:Object>(ofType: T.Type) -> [T]? {
+    func getData<T:Object>(ofType: T.Type) -> [T]? {
         let saveObjects =  realm.objects(ofType)
         return Array(saveObjects.sorted(byKeyPath: "index", ascending: true)).detached
     }
     
-     func saveDate<T: Object >(date: [T]){
+    func saveDate<T: Object >(date: [T]){
         try! realm.write {
             realm.add(date)
         }
     }
-    func getPaginationDays(pagination: Int, isFirst: Bool, isTopScroll: Bool?){
-        let saveObjects =  realm.objects(Day.self)
-        let s = Array(saveObjects.sorted(byKeyPath: "index", ascending: true)).detached
-        if isFirst{
-            
-        }else{
-            
+    
+    func updateDate<T: DateInterval>(date: T) {
+        if date.self is Object{
+            try! realm.write {
+                realm.add(date as! Object, update: .modified)
+            }
         }
     }
-    
 }
