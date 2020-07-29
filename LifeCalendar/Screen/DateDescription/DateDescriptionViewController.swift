@@ -30,10 +30,10 @@ class DateDescriptionViewController: UIViewController {
         self.tableView.register(NoteTableViewCell.self)
         self.tableView.register(AddImageTableViewCell.self)
     }
-    func writeImageToDocs(image:UIImage) -> String{
+    func writeImageToDocs(image:UIImage, path: String) -> String{
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
 
-        let destinationPath = URL(fileURLWithPath: documentsPath).appendingPathComponent("\(String(describing: image.pngData())).png")
+        let destinationPath = URL(fileURLWithPath: documentsPath).appendingPathComponent(path)
 
         debugPrint("destination path is",destinationPath)
         do {
@@ -44,7 +44,7 @@ class DateDescriptionViewController: UIViewController {
         return String(describing: destinationPath)
     }
 
-    func readImageFromDocs(path: String)->UIImage?{
+    func readImageFromDocs(path: String) -> UIImage? {
         let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
 
         let filePath = URL(fileURLWithPath: documentsPath).appendingPathComponent(path).path
@@ -116,18 +116,19 @@ extension DateDescriptionViewController: FeelingTableViewCellProtocol{
     
     
 }
+
 extension DateDescriptionViewController: NoteTableViewCellProtocol{
     func updateNote(_ sender: NoteTableViewCell, text: String) {
         self.presenter.item.diaryEntry = text
     }
-    
-    
 }
+
 extension DateDescriptionViewController: AddImageTableViewCellProtocol{
     func addImage(_ sender: AddImageTableViewCell) {
         present(imagePicker, animated: true, completion: nil)
     }
 }
+
 extension DateDescriptionViewController: DateDescriptionInterface{
     func success() {
         self.setupTableView()
@@ -136,12 +137,15 @@ extension DateDescriptionViewController: DateDescriptionInterface{
         self.alert(message: "Error")
     }
 }
+
 extension DateDescriptionViewController: UINavigationControllerDelegate, UIImagePickerControllerDelegate{
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         picker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
-//            let data = image.jpegData(compressionQuality: 1)
+            let savePath =  info[UIImagePickerController.InfoKey.imageURL] as! URL
+            let p = savePath.path
             self.dateImage = image
+            presenter.item.media = self.writeImageToDocs(image: image, path: p)
             self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
         }
     }
