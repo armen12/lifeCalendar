@@ -9,14 +9,13 @@
 import Foundation
 
 protocol CalendarInterface: class{
-    func loading()
     func success()
     func failure(error: String)
+    func loading()
     func addPaggination()
 }
 protocol  CalendarPresenterProtocol: class {
     init(view: CalendarInterface, realmDB: RealmBuilderProtocol, router: RouterProtocol, calendareBuilder: CalendarBuilderProtocol)
-    func setRepo()
     func selectDate(date: DateInterval)
     
     
@@ -50,17 +49,22 @@ class CalendarPresenter: CalendarPresenterProtocol{
         self.tempWeeks = []
     }
     
-    func setRepo() {
-        self.getDate(dataType: .day)
-        
-    }
     
     func selectDate(date: DateInterval) {
-        self.router.showDateDescriptionController(item: date)
+        if !date.titel.isEmpty || !date.diaryEntry.isEmpty || !date.media!.value.isEmpty || date.emotion != Emotion.empty.rawValue  {
+            self.router.showDateInfoController(item: date)
+        }else{
+            self.router.showDateDescriptionController(item: date)
+        }
     }
+    
     func getDate(dataType: DateType){
         self.view?.loading()
-        switch dataType {
+        self.proccessingDate(type: dataType)
+    }
+    
+    func proccessingDate(type: DateType){
+        switch type {
         case .year:
             self.years = []
             self.loadYears()
@@ -83,105 +87,104 @@ class CalendarPresenter: CalendarPresenterProtocol{
             self.loadDays()
             self.presentingData = self.days
             self.view?.success()
-        }
     }
-    
-    func loadYears(){
-        if  let db = realmDB?.getData(ofType: Year.self)  {
-            let s = self.calendareBuilder?.getTimeInterval(type: .year)
-            leftHourse = "Left: \(s?.second ?? "") \n" + "or \n" + "\(s?.first ?? "")"
-            db.forEach({
-                years.append(self.getCurrentDate(date: $0, dateType: .year))
-            })
+}
+
+func loadYears(){
+    if  let db = realmDB?.getData(ofType: Year.self)  {
+        let s = self.calendareBuilder?.getTimeInterval(type: .year)
+        leftHourse = "Left: \(s?.second ?? "") \n" + "or \n" + "\(s?.first ?? "")"
+        db.forEach({
+            years.append(self.getCurrentDate(date: $0, dateType: .year))
+        })
+    }else{
+        self.view?.failure(error: "Fail Years")
+    }
+}
+
+func loadMonths(){
+    if  let db =  realmDB?.getData(ofType: Month.self){
+        let s = self.calendareBuilder?.getTimeInterval(type: .month)
+        leftHourse = "Left: \(s?.second ?? "") \nor \n\(s?.first ?? "")"
+        db.forEach({
+            months.append(self.getCurrentDate(date: $0, dateType: .month))
+        })
+        
+    }else{
+        self.view?.failure(error: "Fail Month")
+        
+    }
+}
+
+
+func loadWeeks(){
+    if  let db = realmDB?.getData(ofType: Week.self){
+        self.tempWeeks = db
+        let s = self.calendareBuilder?.getTimeInterval(type: .week)
+        leftHourse = "Left: \(s?.second ?? "") \nor \n\(s?.first ?? "") "
+        getPaginationWeeks(pagination: 100, isFirst: true, isTopScroll: nil)
+    }else{
+        self.view?.failure(error: "Fail Week")
+        
+    }
+}
+
+func loadDays(){
+    if  let db  = realmDB?.getData(ofType: Day.self){
+        self.tempDays = db
+        let s = self.calendareBuilder?.getTimeInterval(type: .day)
+        leftHourse = "Left: \(s?.second ?? "") \nor \n\(s?.first ?? "") "
+        getPaginationDays(pagination: 100, isFirst: true, isTopScroll: nil)
+    }else{
+        self.view?.failure(error: "Fail Day")
+    }
+}
+
+func getCurrentDate(date: DateInterval, dateType: DateType) -> DateInterval{
+    let s = date.date.format(with: "dd-MM-yyyy", locale: .current)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd-MM-yyyy"
+    dateFormatter.locale = .current
+    let dateWithTimeZone = dateFormatter.date(from: s)
+    switch dateType {
+        
+    case .year:
+        if dateWithTimeZone?.year == Date().year{
+            date.isCurrentindex = true
         }else{
-            self.view?.failure(error: "Fail Years")
+            return date
         }
-    }
-    
-    func loadMonths(){
-        if  let db =  realmDB?.getData(ofType: Month.self){
-            let s = self.calendareBuilder?.getTimeInterval(type: .month)
-            leftHourse = "Left: \(s?.second ?? "") \nor \n\(s?.first ?? "")"
-            db.forEach({
-                months.append(self.getCurrentDate(date: $0, dateType: .month))
-            })
-            
-        }else{
-            self.view?.failure(error: "Fail Month")
-            
-        }
-    }
-    
-    
-    func loadWeeks(){
-        if  let db = realmDB?.getData(ofType: Week.self){
-            self.tempWeeks = db
-            let s = self.calendareBuilder?.getTimeInterval(type: .week)
-            leftHourse = "Left: \(s?.second ?? "") \nor \n\(s?.first ?? "") "
-            getPaginationWeeks(pagination: 100, isFirst: true, isTopScroll: nil)
-        }else{
-            self.view?.failure(error: "Fail Week")
-            
-        }
-    }
-    
-    func loadDays(){
-        if  let db  = realmDB?.getData(ofType: Day.self){
-            self.tempDays = db
-            let s = self.calendareBuilder?.getTimeInterval(type: .day)
-            leftHourse = "Left: \(s?.second ?? "") \nor \n\(s?.first ?? "") "
-            getPaginationDays(pagination: 100, isFirst: true, isTopScroll: nil)
-        }else{
-            self.view?.failure(error: "Fail Day")
-        }
-    }
-    
-     func getCurrentDate(date: DateInterval, dateType: DateType) -> DateInterval{
-        let s = date.date.format(with: "dd-MM-yyyy", locale: .current)
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "dd-MM-yyyy"
-        dateFormatter.locale = .current
-        let dateWithTimeZone = dateFormatter.date(from: s)
-        switch dateType {
-            
-        case .year:
-            if dateWithTimeZone?.year == Date().year{
+        
+    case .month:
+        if dateWithTimeZone?.year == Date().year {
+            if dateWithTimeZone?.month ==  Date().month{
                 date.isCurrentindex = true
             }else{
-                return date
+                date.isActive = true
             }
-            
-        case .month:
-            if dateWithTimeZone?.year == Date().year {
-                if dateWithTimeZone?.month ==  Date().month{
-                    date.isCurrentindex = true
-                }else{
-                    date.isActive = true
-                }
-            }else{
-                return date
-            }
-            
-        case .week:
-            if dateWithTimeZone?.year == Date().year && dateWithTimeZone?.month ==  Date().month {
+        }else{
+            return date
+        }
+        
+    case .week:
+        if dateWithTimeZone?.year == Date().year && dateWithTimeZone?.month ==  Date().month {
+            date.isCurrentindex = true
+        }else{
+            return date
+        }
+        
+    case .day:
+        if dateWithTimeZone?.year == Date().year && dateWithTimeZone?.month ==  Date().month{
+            if dateWithTimeZone?.day ==  Date().day{
                 date.isCurrentindex = true
             }else{
-                return date
+                date.isActive = true
             }
-            
-        case .day:
-            if dateWithTimeZone?.year == Date().year && dateWithTimeZone?.month ==  Date().month{
-                if dateWithTimeZone?.day ==  Date().day{
-                    date.isCurrentindex = true
-                }else{
-                    date.isActive = true
-                }
-            }else{
-                return date
-            }
-            
+        }else{
+            return date
         }
-        return date
     }
-    
+    return date
+}
+
 }

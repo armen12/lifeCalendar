@@ -7,19 +7,47 @@
 //
 
 import UIKit
+enum NavigaationType{
+    case edit
+    case create
+}
 protocol NavigationTableViewCellProtocol: class{
     func cancelAction(_ sender: NavigationTableViewCell)
     func saveActoin(_ sender: NavigationTableViewCell)
 }
 class NavigationTableViewCell: UITableViewCell {
 
+    @IBOutlet weak var cancelButtonOutlet: UIButton!
     @IBOutlet weak var dateLabel: UILabel!
+    @IBOutlet weak var saveButtonOutlet: UIButton!
     weak var delegate: NavigationTableViewCellProtocol?
     override func awakeFromNib() {
         super.awakeFromNib()
         self.selectionStyle = .none
     }
-    func setupCell(delegate: NavigationTableViewCellProtocol) -> Self{
+    func setupCell(delegate: NavigationTableViewCellProtocol, type: NavigaationType, item: DateInterval) -> Self{
+        switch type {
+        case .edit:
+            self.cancelButtonOutlet.setTitle("", for: .normal)
+            self.cancelButtonOutlet.setImage(UIImage(named: "backButton"), for: .normal)
+            
+            self.saveButtonOutlet.setTitle("Edit", for: .normal)
+        default:
+            break
+        }
+        switch item.self{
+        case is Day:
+            dateLabel.text = "Day \(item.index)"
+        case is Week:
+            dateLabel.text = "Week \(item.index)"
+        case is Month:
+            dateLabel.text = "Month \(item.index)"
+        case is Year:
+            dateLabel.text = "Year \(item.index)"
+        default:
+            break
+        }
+//        self.dateLabel.text = "Day \()"
         self.delegate = delegate
         return self
     }

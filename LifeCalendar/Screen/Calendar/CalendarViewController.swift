@@ -7,43 +7,34 @@
 //
 
 import UIKit
-import DateToolsSwift
+import JGProgressHUD
 
 class CalendarViewController: UIViewController {
     var presenter: CalendarPresenter!
     
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
-    
     @IBOutlet weak var descriptuinLabel: UILabel!
     
+    @IBOutlet weak var shadowView: UIView!
     @IBOutlet weak var collectionView: UICollectionView!
     
-    //    private var activityIndicator = UIActivityIndicatorView()
+    let hud = JGProgressHUD(style: .dark)
+    
     private var dateType: DateType = .day
-    private var isFirsTime = true
-    var lastContentOffset: CGFloat = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        shadowView.addShadow(UIColor(red: 0, green: 0, blue: 0, alpha: 0.15), radius: 20)
         self.setUpCollectionView()
-        
+        self.presenter.getDate(dataType: dateType)
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        self.presenter.setRepo()
         self.collectionView.reloadData()
-        activityIndicator.center = self.view.center
-        activityIndicator.hidesWhenStopped = true
-        activityIndicator.style = .large
-        activityIndicator.color = .red
-        self.view.addSubview(activityIndicator)
     }
+    
     private func hideActivityIndicator(){
-        self.activityIndicator.stopAnimating()
-        self.activityIndicator.isHidden = true
-        self.descriptuinLabel.isHidden = false
-        self.view.isUserInteractionEnabled = true
+        hud.dismiss(animated: false)
     }
     
     private func setUpCollectionView(){
@@ -54,38 +45,37 @@ class CalendarViewController: UIViewController {
         self.collectionView.register(CalendarCollectionViewCell.self)
         self.collectionView.delegate = self
         self.collectionView.dataSource = self
-        
     }
+    
     private func scrollToCurrentDate(){
         let indexOfCurrentDay = self.presenter.presentingData.firstIndex(where: {$0.isCurrentindex})
         let indexPath = IndexPath(item: indexOfCurrentDay ?? 0, section: 0)
         self.collectionView.scrollToItem(at: indexPath, at: [.centeredVertically, .centeredHorizontally], animated: true)
     }
+    
     @IBAction func segmentController(_ sender: UISegmentedControl) {
+        
         switch sender.selectedSegmentIndex {
         case 0:
-            dateType = .day
+            self.dateType = .day
             self.presenter.getDate(dataType: .day)
         case 1:
-            dateType = .week
+            self.dateType = .week
             self.presenter.getDate(dataType: .week)
         case 2:
-            dateType = .month
+            self.dateType = .month
             self.presenter.getDate(dataType: .month)
         case 3:
-            dateType = .year
+            self.dateType = .year
             self.presenter.getDate(dataType: .year)
         default:
-            dateType = .year
+            self.dateType = .year
             self.presenter.getDate(dataType: .year)
-            
-            
         }
     }
 }
 extension CalendarViewController: UICollectionViewDelegate, UICollectionViewDataSource {
     func collectionView(_ collectionView: UICollectionView, didEndDisplaying cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
-        //        print(indexPath.row)
     }
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         switch dateType {
@@ -102,7 +92,6 @@ extension CalendarViewController: UICollectionViewDelegate, UICollectionViewData
         }
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print(self.presenter.presentingData.count)
         return self.presenter.presentingData.count
     }
     
@@ -126,29 +115,30 @@ extension CalendarViewController: UICollectionViewDelegateFlowLayout{
 }
 extension CalendarViewController: CalendarInterface{
     func addPaggination() {
-        self.descriptuinLabel.text = presenter.leftHourse
-        self.hideActivityIndicator()
         DispatchQueue.main.async {
+            self.descriptuinLabel.text = self.presenter.leftHourse
             self.collectionView.reloadData()
         }
     }
     
     func success() {
-        self.descriptuinLabel.text = presenter.leftHourse
-        self.hideActivityIndicator()
         DispatchQueue.main.async {
+            defer{
+                self.view.loadingIndicator(false)
+            }
+            self.descriptuinLabel.text = self.presenter.leftHourse
             self.collectionView.reloadData()
             self.collectionView.performBatchUpdates(nil) { ( _) in
                 self.scrollToCurrentDate()
-                
             }
         }
+        
     }
+    
     func loading() {
-        self.descriptuinLabel.isHidden = true
-        self.activityIndicator.startAnimating()
-        self.activityIndicator.isHidden = false
-        self.view.isUserInteractionEnabled = false
+        DispatchQueue.main.async {
+            self.view.loadingIndicator(true)
+        }
     }
     
     func failure(error: String) {
@@ -156,18 +146,19 @@ extension CalendarViewController: CalendarInterface{
         self.alert(message: error)
     }
 }
+
 extension CalendarViewController{
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         switch dateType {
         case .day:
             if (scrollView.contentOffset.y <= 1){
-                scrollView.contentOffset.y = 15
+                scrollView.contentOffset.y = 25
                 self.presenter.getPaginationDays(pagination: 100, isFirst: false, isTopScroll: true)
             }
             
         case .week:
             if (scrollView.contentOffset.y <= 1){
-                scrollView.contentOffset.y = 15
+                scrollView.contentOffset.y = 25
                 self.presenter.getPaginationWeeks(pagination: 100, isFirst: false, isTopScroll: true)
             }
         default:

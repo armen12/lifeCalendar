@@ -12,14 +12,17 @@ class DateDescriptionViewController: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     var presenter: DateDescriptionPresenter!
     var imagePicker = UIImagePickerController()
-    var dateImage: UIImage?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(true, animated: false)
-        self.presenter.setUp()
         imagePicker.delegate = self
         imagePicker.sourceType = .photoLibrary
         imagePicker.allowsEditing = false
+    }
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        self.presenter.setUp()
     }
     private func setupTableView(){
         self.tableView.delegate = self
@@ -30,28 +33,18 @@ class DateDescriptionViewController: UIViewController {
         self.tableView.register(NoteTableViewCell.self)
         self.tableView.register(AddImageTableViewCell.self)
     }
-    func writeImageToDocs(image:UIImage, path: String) -> String{
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
+    
+  private func writeImage(image: UIImage, path: String){
+        let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
 
-        let destinationPath = URL(fileURLWithPath: documentsPath).appendingPathComponent(path)
-
-        debugPrint("destination path is",destinationPath)
-        do {
-            try image.pngData()?.write(to: destinationPath)
-        } catch {
-            debugPrint("writing file error", error)
-        }
-        return String(describing: destinationPath)
-    }
-
-    func readImageFromDocs(path: String) -> UIImage? {
-        let documentsPath = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0] as String
-
-        let filePath = URL(fileURLWithPath: documentsPath).appendingPathComponent(path).path
-        if FileManager.default.fileExists(atPath: filePath) {
-            return UIImage(contentsOfFile: filePath)
-        } else {
-            return nil
+        let url = documents.appendingPathComponent(path)
+        debugPrint("destination path is",url)
+        if let data = image.pngData() {
+            do {
+                try data.write(to: url)
+            } catch {
+                debugPrint("writing file error", error)
+            }
         }
     }
 }
@@ -63,15 +56,15 @@ extension DateDescriptionViewController: UITableViewDelegate, UITableViewDataSou
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         switch indexPath.row {
         case 0:
-            return tableView.dequeueReusableCell(withType: NavigationTableViewCell.self, for: indexPath).setupCell(delegate: self)
+            return tableView.dequeueReusableCell(withType: NavigationTableViewCell.self, for: indexPath).setupCell(delegate: self, type: .create, item: self.presenter.item)
         case 1:
-            return tableView.dequeueReusableCell(withType: HeadingTableViewCell.self, for: indexPath).setupCell(delegate: self)
+            return tableView.dequeueReusableCell(withType: HeadingTableViewCell.self, for: indexPath).setupCell(delegate: self, item: self.presenter.item)
         case 2:
-            return tableView.dequeueReusableCell(withType: FeelingTableViewCell.self, for: indexPath).setupCell(delegate: self)
+            return tableView.dequeueReusableCell(withType: FeelingTableViewCell.self, for: indexPath).setupCell(delegate: self, item: self.presenter.item)
         case 3:
-            return tableView.dequeueReusableCell(withType: NoteTableViewCell.self, for: indexPath).setupCell(delegate: self)
+            return tableView.dequeueReusableCell(withType: NoteTableViewCell.self, for: indexPath).setupCell(delegate: self, item: self.presenter.item)
         case 4:
-            return tableView.dequeueReusableCell(withType: AddImageTableViewCell.self, for: indexPath).setupCell(delegate: self, image: dateImage)
+            return tableView.dequeueReusableCell(withType: AddImageTableViewCell.self, for: indexPath).setupCell(delegate: self, item: self.presenter.item)
         default:
             return UITableViewCell()
         }
@@ -130,11 +123,11 @@ extension DateDescriptionViewController: AddImageTableViewCellProtocol{
 }
 
 extension DateDescriptionViewController: DateDescriptionInterface{
+    func error(strint: String) {
+        self.alert(message: strint)
+    }
     func success() {
         self.setupTableView()
-    }
-    func error() {
-        self.alert(message: "Error")
     }
 }
 
@@ -143,9 +136,9 @@ extension DateDescriptionViewController: UINavigationControllerDelegate, UIImage
         picker.dismiss(animated: true, completion: nil)
         if let image = info[UIImagePickerController.InfoKey.originalImage] as? UIImage {
             let savePath =  info[UIImagePickerController.InfoKey.imageURL] as! URL
-            let p = savePath.path
-            self.dateImage = image
-            presenter.item.media = self.writeImageToDocs(image: image, path: p)
+            guard let p = savePath.pathComponents.last else {return}
+            self.writeImage(image: image, path: p)
+            presenter.item.media?.value.append(p)
             self.tableView.reloadRows(at: [IndexPath(row: 4, section: 0)], with: .automatic)
         }
     }

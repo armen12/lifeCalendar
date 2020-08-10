@@ -47,16 +47,30 @@ class FeelingTableViewCell: UITableViewCell {
         self.fireButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
     }
     
-    func setupCell(delegate: FeelingTableViewCellProtocol) -> Self{
+    func setupCell(delegate: FeelingTableViewCellProtocol, item: DateInterval) -> Self{
+        switch item.emotion {
+        case "dead":
+            self.deadButtonOutlet.layer.borderColor = UIColor(red: 0.391, green: 0.561, blue: 0.958, alpha: 1).cgColor
+        case "neutral":
+            self.neutralButtonOutlet.layer.borderColor = UIColor(red: 0.391, green: 0.561, blue: 0.958, alpha: 1).cgColor
+        case "heart":
+            self.heartButtonOutlet.layer.borderColor = UIColor(red: 0.391, green: 0.561, blue: 0.958, alpha: 1).cgColor
+        case "rock":
+            self.rockButtonOutlet.layer.borderColor = UIColor(red: 0.391, green: 0.561, blue: 0.958, alpha: 1).cgColor
+        case "fire":
+            self.fireButtonOutlet.layer.borderColor = UIColor(red: 0.391, green: 0.561, blue: 0.958, alpha: 1).cgColor
+        default:
+            break
+        }
         self.delegate = delegate
         return self
     }
     func setBorderColor(){
-         self.deadButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
-         self.neutralButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
-         self.heartButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
-         self.rockButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
-         self.fireButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
+        self.deadButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
+        self.neutralButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
+        self.heartButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
+        self.rockButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
+        self.fireButtonOutlet.layer.borderColor = UIColor(red: 0.855, green: 0.855, blue: 0.855, alpha: 1).cgColor
     }
     
     @IBAction func deadFeelingAction(_ sender: UIButton) {
@@ -65,22 +79,22 @@ class FeelingTableViewCell: UITableViewCell {
         delegate?.deadFeelingAction(self)
     }
     @IBAction func neutralFeelingAction(_ sender: UIButton) {
-         self.setBorderColor()
+        self.setBorderColor()
         self.neutralButtonOutlet.layer.borderColor = UIColor(red: 0.391, green: 0.561, blue: 0.958, alpha: 1).cgColor
         delegate?.neutralFeelingAction(self)
     }
     @IBAction func heartFeelingAction(_ sender: UIButton) {
-         self.setBorderColor()
+        self.setBorderColor()
         self.heartButtonOutlet.layer.borderColor = UIColor(red: 0.391, green: 0.561, blue: 0.958, alpha: 1).cgColor
         delegate?.heartFeelingAction(self)
     }
     @IBAction func rockFeelingAction(_ sender: UIButton) {
-         self.setBorderColor()
+        self.setBorderColor()
         self.rockButtonOutlet.layer.borderColor = UIColor(red: 0.391, green: 0.561, blue: 0.958, alpha: 1).cgColor
         delegate?.rockFeelingAction(self)
     }
     @IBAction func fireFeelingAction(_ sender: UIButton) {
-         self.setBorderColor()
+        self.setBorderColor()
         self.fireButtonOutlet.layer.borderColor = UIColor(red: 0.391, green: 0.561, blue: 0.958, alpha: 1).cgColor
         delegate?.fireFeelingAction(self)
     }

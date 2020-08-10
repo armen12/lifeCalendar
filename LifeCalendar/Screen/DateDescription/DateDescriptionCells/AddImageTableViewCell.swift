@@ -25,13 +25,22 @@ class AddImageTableViewCell: UITableViewCell {
         self.imageCollectionView.dataSource = self
         self.imageCollectionView.register(AddImageCollectionViewCell.self)
     }
-    func setupCell(delegate: AddImageTableViewCellProtocol, image: UIImage?) -> Self{
+    func readImageFromDocs(path: String) -> UIImage? {
+           let documents = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
+           let url = documents.appendingPathComponent(path).path
+           if FileManager.default.fileExists(atPath: url) {
+               return UIImage(contentsOfFile: url)
+           } else {
+               return nil
+           }
+       }
+    func setupCell(delegate: AddImageTableViewCellProtocol, item: DateInterval) -> Self{
         self.delegate = delegate
-        if let image = image {
-            self.arrOfImage.append(image)
-            self.imageCollectionView.reloadData()
+        arrOfImage = []
+        for i in item.media!.value{
+            arrOfImage.append(self.readImageFromDocs(path: i)!)
         }
-        
+        self.imageCollectionView.reloadData()
         return self
     }
     

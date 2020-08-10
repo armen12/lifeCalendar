@@ -1,6 +1,7 @@
 PODS:
   - DateToolsSwift (5.0.0)
   - IQKeyboardManagerSwift (6.5.5)
+  - JGProgressHUD (2.1)
   - Realm (5.0.3):
     - Realm/Headers (= 5.0.3)
   - Realm/Headers (5.0.3)
@@ -10,21 +11,24 @@ PODS:
 DEPENDENCIES:
   - DateToolsSwift
   - IQKeyboardManagerSwift
+  - JGProgressHUD
   - RealmSwift
 
 SPEC REPOS:
   trunk:
     - DateToolsSwift
     - IQKeyboardManagerSwift
+    - JGProgressHUD
     - Realm
     - RealmSwift
 
 SPEC CHECKSUMS:
   DateToolsSwift: 4207ada6ad615d8dc076323d27037c94916dbfa6
   IQKeyboardManagerSwift: 0fb93310284665245591f50f7a5e38de615960b7
+  JGProgressHUD: aa403e9a5b45cae98903c4600cccdd98c0c3ec90
   Realm: bfca1699b61b0b17c3a69ae0e648314eae91fbdb
   RealmSwift: 493c9f089cd3893b3959007973c0e4f640906ba0
 
-PODFILE CHECKSUM: 69dd87d0babbea83db0b40b355096e8b781e2e4e
+PODFILE CHECKSUM: fde7ad3e36be8d6c12d4e20aaf013886762ae163
 
 COCOAPODS: 1.9.1

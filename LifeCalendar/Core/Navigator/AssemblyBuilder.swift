@@ -12,6 +12,8 @@ protocol  AssemblyBuilderProtocol {
     func createMainView(router: RouterProtocol) -> UIViewController
     func createCalendarController(router: Router) -> UIViewController
     func createDateDescriptionController(router: Router, item: DateInterval) -> UIViewController
+    func createDateInfoController(router: Router, item: DateInterval) -> UIViewController
+    func createDiaryController(router: Router) -> UIViewController
 }
 class AssemblyBuilder: AssemblyBuilderProtocol{
     
@@ -37,6 +39,21 @@ class AssemblyBuilder: AssemblyBuilderProtocol{
         let view = DateDescriptionViewController()
         let realmDB = RealmBuilder()
         let presenter = DateDescriptionPresenter(view: view, realmDB: realmDB, router: router, item: item)
+        view.presenter = presenter
+        return view
+    }
+    
+    func createDateInfoController(router: Router, item: DateInterval) -> UIViewController {
+        let view = DateInfoViewController()
+        let presenter = DateInfoPresenter(view: view, router: router, item: item)
+        view.presenter = presenter
+        return view
+    }
+    
+    func createDiaryController(router: Router) -> UIViewController{
+        let view = DiaryViewController()
+        let realmDB = RealmBuilder()
+        let presenter = DiaryPresenter(view: view, realmBuilder: realmDB, router: router)
         view.presenter = presenter
         return view
     }

@@ -21,7 +21,8 @@ class NoteTableViewCell: UITableViewCell {
         self.noteTextView.layer.cornerRadius = 8
         self.noteTextView.delegate = self
     }
-    func setupCell(delegate: NoteTableViewCellProtocol) -> Self{
+    func setupCell(delegate: NoteTableViewCellProtocol, item: DateInterval) -> Self{
+        self.noteTextView.text = item.diaryEntry
         self.delegate = delegate
         return self
     }

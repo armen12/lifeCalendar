@@ -18,7 +18,8 @@ class HeadingTableViewCell: UITableViewCell {
         self.selectionStyle = .none
         self.headingTextField.delegate = self
     }
-    func setupCell(delegate: HeadingTableViewCellProtocol) -> Self{
+    func setupCell(delegate: HeadingTableViewCellProtocol, item: DateInterval) -> Self{
+        self.headingTextField.text = item.titel
         self.delegate = delegate
         return self
     }

@@ -7,9 +7,10 @@
 //
 
 import Foundation
+
 protocol DateDescriptionInterface: class{
     func success()
-    func error()
+    func error(strint: String)
 }
 protocol DateDescriptionPresenterProtocol {
     init(view: DateDescriptionInterface, realmDB: RealmBuilderProtocol, router: RouterProtocol, item: DateInterval)
@@ -29,15 +30,21 @@ class DateDescriptionPresenter: DateDescriptionPresenterProtocol{
         self.realmDB = realmDB
         self.item = item
     }
+    
     func setUp() {
         self.view?.success()
     }
     func save() {
-        self.realmDB?.updateDate(date: item)
-        self.router.popScreen()
+        if item.titel == ""{
+            self.view?.error(strint: "Fill in title field")
+        }else{
+            self.realmDB?.updateDate(date: item)
+        }
+        self.router.popToRoot()
     }
+    
     func cancel() {
-        self.router.popScreen()
+        self.router.popToRoot()
     }
     
     
